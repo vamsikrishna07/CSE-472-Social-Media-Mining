@@ -49,7 +49,7 @@ async def main(phone):
     
         my_channel = await client.get_entity(user_input_channel)
         
-        offset_id, limit, all_messages, total_messages, total_count_limit = 0, 1000, [], 0, 100000
+        offset_id, limit, all_messages, total_messages, total_count_limit = 0, 2000, [], 0, 1000000
         while True:
             history = await client(GetHistoryRequest(peer = my_channel, offset_id = offset_id, offset_date = None, add_offset = 0, limit = limit, max_id = 0, min_id = 0, hash = 0))
             if not history.messages: break
@@ -60,7 +60,7 @@ async def main(phone):
             if total_count_limit !=0 and total_messages >= total_count_limit: 
                 break 
             
-        with open('channel_messages.json','w') as outfile:
+        with open('messages.json','w') as outfile:
             json.dump(all_messages, outfile, cls = DateTimeEncoder)
         
 asyncio.run(main(phone))
