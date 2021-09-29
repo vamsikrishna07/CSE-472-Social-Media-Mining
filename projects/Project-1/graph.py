@@ -49,35 +49,35 @@ graph = networkx.Graph()
 
 for k, v in d[0].items():  graph.add_edge(k[0], k[1], weight=(v * 15))
 
+
+degreeCentrality   = networkx.algorithms.centrality.degree_centrality(graph)
+plt.bar(degreeCentrality.keys(),degreeCentrality.values(),color='y')
+plt.xlabel("words")
+plt.ylabel("Degree centrality")
+plt.title("Degree Distribution")
+plt.xticks(rotation=90)
+plt.show()
+
+betweenness         = networkx.algorithms.centrality.betweenness_centrality(graph)
+plt.bar(betweenness.keys(),betweenness.values(),color='y')
+plt.xlabel("words")
+plt.ylabel("Betweenness")
+plt.title("Betweenness")
+plt.xticks(rotation=90)
+plt.show()
+
+closeness          = networkx.algorithms.centrality.closeness_centrality(graph)
+plt.bar(closeness.keys(),closeness.values(),color='y')
+plt.xlabel("words")
+plt.ylabel("Closeness")
+plt.title("Closeness")
+plt.xticks(rotation=90)
+plt.show()
+
 fig, axis = plt.subplots(figsize=(100, 80))
-
 position = networkx.spring_layout(graph, k=3)
-
 networkx.draw_networkx(graph, position, font_size=30, width=6, edge_color='grey', node_color='green', with_labels = False, ax = axis)
-
 for key, value in position.items():
     x, y = value[0], value[1]
     axis.text(x, y, s=key, bbox=dict(facecolor='yellow', alpha = 0.25), horizontalalignment='center', fontsize = 30)
-    
 plt.show()
-
-
-def drawHistogram(dict,title,xlabel,ylabel):
-    plt.bar(dict.keys(),dict.values(),color='g')
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
-    plt.title(title)
-    plt.xticks(rotation=90)
-    plt.show()
-    
-
-degreeCentrality   = networkx.algorithms.centrality.degree_centrality(graph)
-betweeness         = networkx.algorithms.centrality.betweenness_centrality(graph)
-closeness          = networkx.algorithms.centrality.closeness_centrality(graph)
-
-measures = pd.DataFrame([degreeCentrality,betweeness,closeness])
-measures = measures.rename(index={0:'DegreeCentrality',1:'Betweenness',2:'Closeness'}).transpose()
-
-drawHistogram(degreeCentrality,"Degree Centrality Histogram","Screen Name", "Degree Centrality")
-drawHistogram(betweeness, "Betweeness Histogram", "Screen Name","Betweeness")
-drawHistogram(closeness, "Closeness Histogram", "Screen Name","Closeness")
