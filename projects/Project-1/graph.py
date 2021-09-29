@@ -6,6 +6,7 @@ Created on Mon Sep 27 19:18:45 2021
 """
 
 import pandas as pd
+import json
 import matplotlib.pyplot as plt
 
 import nltk
@@ -81,3 +82,7 @@ for key, value in position.items():
     x, y = value[0], value[1]
     axis.text(x, y, s=key, bbox=dict(facecolor='yellow', alpha = 0.25), horizontalalignment='center', fontsize = 30)
 plt.show()
+
+measures = pd.DataFrame([degreeCentrality, betweenness, closeness])
+measures = measures.rename(index = {0: 'Degree Centrality', 1: 'Betweenness', 2: 'Closeness'}).transpose()
+measures.to_csv('measures_results.csv')
